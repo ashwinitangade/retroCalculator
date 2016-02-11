@@ -7,19 +7,115 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
+    enum Operation :String{
+        case divide = "/"
+        case multiply = "*"
+        case add = "+"
+        case subtract = "-"
+        case dot = "."
+        case empty = "empty"
+    }
+    @IBOutlet weak var resultText: UILabel!
+    var btnSound : AVAudioPlayer!
+    
+    var leftValString = ""
+    var rightValString = ""
+    var runningNumber = ""
+    var currentOperation : Operation = Operation.empty
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let path = NSBundle.mainBundle().pathForResource("button", ofType: "wav")
+        let soundUrl = NSURL.fileURLWithPath(path!)
+        do{
+            try btnSound = AVAudioPlayer(contentsOfURL: soundUrl)
+            btnSound.prepareToPlay()
+        }
+        catch let error as NSError{
+            print(error.debugDescription)
+        }
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func numberPressed(sender: UIButton)
+    {
+        runningNumber += "\(sender.tag)"
+        resultText.text=runningNumber
+        playSound()
     }
+    @IBAction func multiply(sender: UIButton)
+    {
+        processOperation(Operation.multiply)
+        
+    }
+    @IBAction func divide(sender: UIButton)
+    {
+        processOperation(Operation.divide)
 
+    }
+    @IBAction func add(sender: UIButton)
+    {
+        processOperation(Operation.add)
 
+    }
+    @IBAction func subtract(sender: UIButton)
+    {
+        processOperation(Operation.subtract)
+
+    }
+    @IBAction func calculate(sender: UIButton)
+    {
+        processOperation(currentOperation)
+    }
+    func processOperation(op:Operation)
+    {
+        playSound()
+        if(currentOperation != Operation.empty)
+        {
+            if(runningNumber != "")
+            {
+                //Run math
+                var result = ""
+                rightValString = runningNumber
+                runningNumber = ""
+                if(currentOperation == Operation.multiply)
+                {
+                    result = "\(Double(leftValString)! * Double(rightValString)!)"
+                }
+                else if(currentOperation == Operation.divide)
+                {
+                    result = "\(Double(leftValString)! / Double(rightValString)!)"
+                }
+                else if(currentOperation == Operation.add)
+                {
+                    result = "\(Double(leftValString)! + Double(rightValString)!)"
+                }
+                else if(currentOperation == Operation.multiply)
+                {
+                    result = "\(Double(leftValString)!-Double(rightValString)!)"
+                }
+                leftValString = result
+                resultText.text = result
+                currentOperation = op
+            }
+        }
+        else{
+            //first time operator is pressed
+            leftValString = runningNumber
+            runningNumber = ""
+            currentOperation = op
+        }
+    }
+    func playSound()
+    {
+        if(btnSound.playing)
+        {
+            btnSound.stop()
+        }
+        btnSound.play()
+    }
 }
-
