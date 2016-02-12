@@ -16,7 +16,6 @@ class ViewController: UIViewController {
         case multiply = "*"
         case add = "+"
         case subtract = "-"
-        case dot = "."
         case empty = "empty"
     }
     @IBOutlet weak var resultText: UILabel!
@@ -45,6 +44,12 @@ class ViewController: UIViewController {
     @IBAction func numberPressed(sender: UIButton)
     {
         runningNumber += "\(sender.tag)"
+        resultText.text=runningNumber
+        playSound()
+    }
+    @IBAction func dotPressed(sender: UIButton)
+    {
+        runningNumber += "."
         resultText.text=runningNumber
         playSound()
     }

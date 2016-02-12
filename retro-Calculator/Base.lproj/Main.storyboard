@@ -215,6 +215,9 @@
                                                     <constraint firstAttribute="height" constant="55" id="Gbl-JZ-GZ8"/>
                                                 </constraints>
                                                 <state key="normal" image="dot"/>
+                                                <connections>
+                                                    <action selector="dotPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hCC-lT-BFd"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1VE-Jf-tmV">
                                                 <rect key="frame" x="120" y="0.0" width="55" height="55"/>
