@@ -57,6 +57,7 @@ class ViewController: UIViewController {
             resultText.text=runningNumber
         }
         playSound()
+        
     }
     @IBAction func multiply(sender: UIButton)
     {
