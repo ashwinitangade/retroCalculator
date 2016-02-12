@@ -26,7 +26,8 @@ class ViewController: UIViewController {
     var rightValString = ""
     var runningNumber = ""
     var currentOperation : Operation = Operation.empty
-    
+    var result = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -76,35 +77,33 @@ class ViewController: UIViewController {
         playSound()
         if(currentOperation != Operation.empty)
         {
-            if(runningNumber != "")
-            {
-                //Run math
-                var result = ""
+            //Run some math
+            
+            //A user selected an operator, but then selected another operator without
+            //first entering a number
+            if runningNumber != "" {
                 rightValString = runningNumber
                 runningNumber = ""
-                if(currentOperation == Operation.multiply)
-                {
+                
+                if currentOperation == Operation.multiply {
                     result = "\(Double(leftValString)! * Double(rightValString)!)"
-                }
-                else if(currentOperation == Operation.divide)
-                {
+                } else if currentOperation == Operation.divide {
                     result = "\(Double(leftValString)! / Double(rightValString)!)"
-                }
-                else if(currentOperation == Operation.add)
-                {
+                } else if currentOperation == Operation.subtract {
+                    result = "\(Double(leftValString)! - Double(rightValString)!)"
+                } else if currentOperation == Operation.add {
                     result = "\(Double(leftValString)! + Double(rightValString)!)"
                 }
-                else if(currentOperation == Operation.multiply)
-                {
-                    result = "\(Double(leftValString)!-Double(rightValString)!)"
-                }
+                
                 leftValString = result
                 resultText.text = result
-                currentOperation = op
             }
-        }
-        else{
-            //first time operator is pressed
+            
+            
+            currentOperation = op
+            
+        } else {
+            //This is the first time an operator has been pressed
             leftValString = runningNumber
             runningNumber = ""
             currentOperation = op
