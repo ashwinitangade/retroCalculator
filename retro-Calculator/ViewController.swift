@@ -49,8 +49,13 @@ class ViewController: UIViewController {
     }
     @IBAction func dotPressed(sender: UIButton)
     {
-        runningNumber += "."
-        resultText.text=runningNumber
+        if resultText.text!.rangeOfString(".") != nil{
+            print("exists")
+        }
+        else{
+            runningNumber += "."
+            resultText.text=runningNumber
+        }
         playSound()
     }
     @IBAction func multiply(sender: UIButton)
